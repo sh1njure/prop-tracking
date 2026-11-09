@@ -1,5 +1,5 @@
 # Prop Ledger
 
-Учёт проп-аккаунтов: покупки, статусы, выплаты, итог и ROI. Статическая страница на GitHub Pages.
+Tracks prop firm accounts: purchases, statuses, payouts, net result and ROI for the current year. Static page on GitHub Pages.
 
-Все данные лежат в `data.js` — чтобы обновить, поменяй его и закоммить.
+All data lives in `data.js`. To update the site, edit it and commit. Only entries from `year` are shown.
