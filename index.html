@@ -3,97 +3,63 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://izbcydezdbmlnrbrouyx.supabase.co wss://izbcydezdbmlnrbrouyx.supabase.co; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow">
 <title>Prop Ledger</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Unbounded:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div>
-      <h1>Prop Ledger</h1>
-      <p class="sub">Куплено, пройдено, выплачено. Суммы в USD.</p>
+<nav class="nav-wrap">
+  <div class="nav">
+    <span class="brand"><span class="mark" aria-hidden="true">P</span>Prop Ledger</span>
+    <div class="nav-links">
+      <a href="#accounts">Аккаунты</a>
+      <a href="#payouts">Выплаты</a>
+      <span class="updated" id="updated"></span>
     </div>
-    <div class="who">
-      <span class="status" id="status"></span>
-      <button class="link" id="login" type="button">Войти</button>
-      <button class="link" id="logout" type="button" hidden>Выйти</button>
-    </div>
-  </header>
+  </div>
+</nav>
 
-  <section id="auth" class="panel auth" hidden>
-    <h2>Вход</h2>
-    <form id="auth-form" autocomplete="on">
-      <label>Email<input id="auth-email" type="email" required autocomplete="email"></label>
-      <label>Пароль<input id="auth-pass" type="password" required minlength="8" autocomplete="current-password"></label>
-      <div class="row">
-        <button class="btn" id="btn-login" type="submit">Войти</button>
-        <button class="link" id="btn-signup" type="button">Создать аккаунт</button>
-        <button class="link" id="btn-cancel" type="button">Отмена</button>
-      </div>
-      <p class="form-msg" id="auth-msg" hidden></p>
-    </form>
+<main class="wrap">
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Чистый итог по пропам</p>
+      <h1 class="big num" id="net">$0</h1>
+      <p class="lead" id="lead">Потрачено на аккаунты против того, что пришло выплатами.</p>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="hero-card">
+      <span class="hc-lbl">Выплачено всего</span>
+      <span class="hc-val num" id="paid">$0</span>
+      <span class="hc-sub" id="paid-sub">Выплат: 0</span>
+      <div class="hc-rows" id="last-payouts"></div>
+    </div>
   </section>
 
-  <main id="app" class="readonly">
-    <div class="kpis">
-      <div class="kpi"><span class="lbl">Потрачено на аккаунты</span><span class="val num" id="k-spent">$0</span><span class="hint" id="k-spent-h">0 акк.</span></div>
-      <div class="kpi"><span class="lbl">Выплаты</span><span class="val num" id="k-paid">$0</span><span class="hint" id="k-paid-h">0 выплат</span></div>
-      <div class="kpi"><span class="lbl">Чистый итог</span><span class="val num" id="k-net">$0</span><span class="hint" id="k-net-h">ROI —</span></div>
-      <div class="kpi"><span class="lbl">Воронка</span><span class="val num" id="k-funnel">—</span><span class="hint">фандед · с выплатой · из всех</span></div>
-    </div>
+  <section class="block">
+    <h2>Кривая итога</h2>
+    <div class="card chart" id="chart"></div>
+  </section>
 
-    <section>
-      <div class="sec-head"><h2>Кривая итога</h2><span class="note">покупки минус, выплаты плюс, по датам</span></div>
-      <div class="panel chart" id="chart"></div>
-    </section>
+  <section class="block">
+    <h2>По фирмам</h2>
+    <div class="card tbl" id="firms"></div>
+  </section>
 
-    <section>
-      <div class="sec-head"><h2>По фирмам</h2></div>
-      <div class="panel tbl" id="firms"></div>
-    </section>
+  <section class="block" id="accounts">
+    <h2>Аккаунты</h2>
+    <div class="card tbl" id="acc-table"></div>
+  </section>
 
-    <section>
-      <div class="sec-head"><h2>Аккаунты</h2><span class="note">статус меняется прямо в таблице</span></div>
-      <div class="panel">
-        <div class="tbl" id="acc-table"></div>
-        <form class="add" id="acc-form" autocomplete="off">
-          <label>Фирма<input id="a-firm" list="firm-list" required maxlength="80" placeholder="The5ers"></label>
-          <label>Рынок<select id="a-market"><option value="CFD">CFD</option><option value="Futures">Фьючи</option></select></label>
-          <label>Размер, $K<input id="a-size" type="number" min="1" step="1" required placeholder="100"></label>
-          <label>Программа<input id="a-program" maxlength="80" placeholder="2-Step, Builder…"></label>
-          <label>Цена, $<input id="a-price" type="number" min="0" step="0.01" required placeholder="149"></label>
-          <label>Дата покупки<input id="a-date" type="date" required></label>
-          <label>Статус<select id="a-status"><option value="eval">Челлендж</option><option value="funded">Фандед</option><option value="blown_eval">Слит на челлендже</option><option value="blown_funded">Слит на фандеде</option></select></label>
-          <button class="btn" id="a-btn" type="submit">Добавить аккаунт</button>
-          <p class="form-msg" id="a-msg" hidden></p>
-        </form>
-      </div>
-    </section>
+  <section class="block" id="payouts">
+    <h2>Выплаты</h2>
+    <div class="card tbl" id="pay-table"></div>
+  </section>
+</main>
 
-    <section>
-      <div class="sec-head"><h2>Выплаты</h2><span class="note">сумма, которая пришла тебе, после сплита</span></div>
-      <div class="panel">
-        <div class="tbl" id="pay-table"></div>
-        <form class="add" id="pay-form" autocomplete="off">
-          <label>Аккаунт<select id="p-acc" required></select></label>
-          <label>Сумма, $<input id="p-amount" type="number" min="0" step="0.01" required placeholder="1200"></label>
-          <label>Дата<input id="p-date" type="date" required></label>
-          <label>Заметка<input id="p-note" maxlength="200" placeholder="Rise → USDT"></label>
-          <button class="btn" id="p-btn" type="submit">Добавить выплату</button>
-          <p class="form-msg" id="p-msg" hidden></p>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <datalist id="firm-list"><option value="The5ers"><option value="MyFundedFutures"><option value="Funded Trader Markets"><option value="Topstep"><option value="Top One Futures"></datalist>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" integrity="sha384-0w2KAL2YHP6wKOkUDzkCDGgVvfmHnj02DHeQ6XcHOgTfFsGyonKOpShMH1x6nk9o" crossorigin="anonymous"></script>
+<script src="data.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
