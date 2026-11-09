@@ -74,4 +74,8 @@ td.soft{color:var(--muted)}
 .pill.eval{background:var(--soft);color:var(--navy)}
 .pill.funded{background:#DDF5EC;color:var(--pos)}
 .pill.blown{background:#FCE6E3;color:var(--neg)}
+.pill.unknown{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
 .missing{color:var(--warn)}
+.firm .sub{display:block;font-weight:400;font-size:.78rem;color:var(--muted);margin-top:2px}
+.conv{color:var(--muted);font-size:.82rem}
+.chart-note{margin:10px 2px 0;color:var(--muted);font-size:.84rem}
