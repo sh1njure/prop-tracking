@@ -19,6 +19,7 @@
     </div>
     <div class="who">
       <span class="status" id="status"></span>
+      <button class="link" id="login" type="button">Войти</button>
       <button class="link" id="logout" type="button" hidden>Выйти</button>
     </div>
   </header>
@@ -31,12 +32,13 @@
       <div class="row">
         <button class="btn" id="btn-login" type="submit">Войти</button>
         <button class="link" id="btn-signup" type="button">Создать аккаунт</button>
+        <button class="link" id="btn-cancel" type="button">Отмена</button>
       </div>
       <p class="form-msg" id="auth-msg" hidden></p>
     </form>
   </section>
 
-  <main id="app" hidden>
+  <main id="app" class="readonly">
     <div class="kpis">
       <div class="kpi"><span class="lbl">Потрачено на аккаунты</span><span class="val num" id="k-spent">$0</span><span class="hint" id="k-spent-h">0 акк.</span></div>
       <div class="kpi"><span class="lbl">Выплаты</span><span class="val num" id="k-paid">$0</span><span class="hint" id="k-paid-h">0 выплат</span></div>

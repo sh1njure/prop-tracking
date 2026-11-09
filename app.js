@@ -21,17 +21,18 @@
   const errText = (e) => (e && (e.message || e.error_description)) || "неизвестная ошибка";
 
   // ---------- auth ----------
+  let signedIn = false;
   async function onSession(session) {
-    if (session) {
-      $("auth").hidden = true; $("app").hidden = false; $("logout").hidden = false;
-      setStatus(session.user.email || "");
-      $("a-date").value = today(); $("p-date").value = today();
-      await load();
-    } else {
-      $("auth").hidden = false; $("app").hidden = true; $("logout").hidden = true;
-      accounts = []; payouts = []; setStatus("");
-    }
+    signedIn = !!session;
+    $("app").classList.toggle("readonly", !signedIn);
+    $("logout").hidden = !signedIn;
+    $("login").hidden = signedIn;
+    if (signedIn) $("auth").hidden = true;
+    $("a-date").value = today(); $("p-date").value = today();
+    await load();
   }
+  $("login").addEventListener("click", () => { $("auth").hidden = false; $("auth-email").focus(); });
+  $("btn-cancel").addEventListener("click", () => { $("auth").hidden = true; showMsg($("auth-msg"), ""); });
 
   $("auth-form").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -64,8 +65,7 @@
     ]);
     if (a.error || p.error) { setStatus("Не удалось загрузить: " + errText(a.error || p.error), true); return; }
     accounts = a.data; payouts = p.data;
-    const { data } = await sb.auth.getUser();
-    setStatus(data && data.user ? data.user.email : "");
+    setStatus(signedIn ? "Режим редактирования" : "");
     render();
   }
 
@@ -156,7 +156,7 @@
 
   // ---------- writes ----------
   document.addEventListener("click", async (e) => {
-    const b = e.target.closest(".del"); if (!b) return;
+    const b = e.target.closest(".del"); if (!b || !signedIn) return;
     if (!b.classList.contains("arm")) {
       b.classList.add("arm"); b.textContent = "Точно удалить?";
       setTimeout(() => { if (b.isConnected) { b.classList.remove("arm"); b.textContent = "Удалить"; } }, 3500);
@@ -170,7 +170,7 @@
   });
 
   document.addEventListener("change", async (e) => {
-    const s = e.target.closest("select.st"); if (!s || !STATUS[s.value]) return;
+    const s = e.target.closest("select.st"); if (!s || !signedIn || !STATUS[s.value]) return;
     s.dataset.v = s.value;
     const { error } = await sb.from("accounts").update({ status: s.value }).eq("id", s.dataset.id);
     if (error) setStatus("Не удалось сменить статус: " + errText(error), true);

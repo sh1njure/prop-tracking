@@ -74,3 +74,5 @@ input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid 
 .btn:disabled{opacity:.55;cursor:default}
 .form-msg{grid-column:1/-1;font-size:.84rem;color:var(--loss);margin:0}
 .form-msg.ok{color:var(--accent)}
+.readonly form.add,.readonly .del{display:none}
+.readonly select.st{pointer-events:none;appearance:none;-webkit-appearance:none}
