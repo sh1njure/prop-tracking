@@ -13,7 +13,7 @@ window.LEDGER = {
     { id: "ftm-50k",   firm: "Funded Trader Markets", market: "CFD", size: 50, program: "2-Step Plus", price: 200, purchased: "2026-09-28", status: "blown_eval", note: "#232181, 1-я фаза пройдена, слит на 2-й 08.10" },
 
     { id: "fp-5k",     firm: "FundingPips", market: "CFD", size: 5,  program: "", price: 36, purchased: null, status: "blown_eval", note: "цена по прайсу" },
-    { id: "fp-10k",    firm: "FundingPips", market: "CFD", size: 10, program: "", price: 66, purchased: null, status: "blown_eval", note: "цена по прайсу" },
+    { id: "fp-10k",    firm: "FundingPips", market: "CFD", size: 10, program: "", price: 66, purchased: null, status: "blown_funded", note: "цена по прайсу" },
 
     { id: "ftmo-10k",  firm: "FTMO", market: "CFD", size: 10, program: "", price: 98, purchased: null, status: "blown_eval", note: "размер примерно" },
 
