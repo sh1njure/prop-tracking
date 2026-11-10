@@ -6,7 +6,7 @@
 // purchased / date: "YYYY-MM-DD" or null. size: in thousands ($K) or null.
 window.LEDGER = {
   year: 2026,
-  updated: "2026-11-09",
+  updated: "2026-11-10",
   fx: { EUR: 1.117 }, // EUR→USD rate used for conversion (27 Oct 2026)
   accounts: [
     // Funded Trader Markets — dates and statuses from the FTM dashboard
@@ -17,7 +17,7 @@ window.LEDGER = {
 
     { id: "mff-50k",   firm: "MyFundedFutures", market: "Futures", size: 50, program: "Builder", price: 68, purchased: null, year: 2026, status: "funded" },
 
-    { id: "t5-100k",   firm: "The5ers", market: "CFD", size: 100,  program: "", price: 130, currency: "EUR", purchased: null, year: 2026, status: "eval" },
+    { id: "t5-100k",   firm: "The5ers", market: "CFD", size: 100,  program: "", price: 130, currency: "EUR", purchased: null, year: 2026, status: "blown_eval", note: "blown 10 Nov" },
     { id: "t5-2",      firm: "The5ers", market: "CFD", size: null, program: "", price: 130, currency: "EUR", purchased: null, year: 2026, status: "blown_eval" },
 
     // Bought before 2026 — kept for history, hidden on the site
